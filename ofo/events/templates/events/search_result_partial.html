@@ -1,0 +1,12 @@
+{% if users %}
+  <ul>
+    {% for user in users %}
+      <li onclick="add_user('{{ user.username }}')">
+        {{ user.username }}
+        <i class="far fa-plus-square"></i>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Kein User gefunden.</p>
+{% endif %}

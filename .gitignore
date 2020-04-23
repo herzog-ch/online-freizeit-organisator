@@ -1,0 +1,10 @@
+
+*.pyc
+ofo/.idea/inspectionProfiles/profiles_settings.xml
+ofo/.idea/misc.xml
+ofo/.idea/modules.xml
+ofo/.idea/ofo.iml
+ofo/.idea/vcs.xml
+ofo/.idea/*
+venv/**/*
+color_palette.txt
