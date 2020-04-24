@@ -22,7 +22,7 @@ class Event(models.Model):
     time = models.TimeField()
     duration = models.IntegerField() # duration in minutes
     place = models.CharField(max_length=100)
-    guests = models.ManyToManyField(User, related_name='guest')
+    guests = models.ManyToManyField(User, related_name='guests')
 
 
 class Proposal(models.Model):

@@ -1,15 +1,90 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.contrib.auth.models import User
-from .forms import NewEventForm
-from .models import Event, STATUS_OPEN, Status
+from .forms import NewEventForm, ProposalForm, DetermineEventForm
+from .models import Event, STATUS_OPEN, STATUS_DECIDED, Status, Proposal
 from django.contrib.auth.models import User
 
 
+@login_required(login_url='/login/login')
+def detail(request, event_id):
+    try:
+        event = Event.objects.get(pk=event_id)
+    except Event.DoesNotExist:
+        return HttpResponseRedirect('/events/overview')
 
-@login_required(login_url='login/login/')
+    if event.organisator == request.user:
+        is_organisator = True
+    else:
+        is_organisator = False
+
+    if is_organisator and event.status.status == STATUS_OPEN:
+        if request.method == 'POST':
+            determine_event_form = DetermineEventForm(request.POST)
+            if determine_event_form.is_valid():
+                event.status = Status.objects.get(status=STATUS_DECIDED)
+                event.date = determine_event_form.cleaned_data['date']
+                event.time = determine_event_form.cleaned_data['time']
+                event.place = determine_event_form.cleaned_data['place']
+                event.save()
+                event.refresh_from_db()
+        else:
+            determine_event_form = DetermineEventForm()
+    else:
+        determine_event_form = None
+
+    try:
+        Proposal.objects.filter(event=event).get(author=request.user)
+        user_did_proposal = True
+    except Proposal.DoesNotExist:
+        user_did_proposal = False
+
+    if not is_organisator and not user_did_proposal and event.status.status == STATUS_OPEN:
+        if request.method == 'POST':
+            proposal_form = ProposalForm(request.POST)
+            if proposal_form.is_valid():
+                new_proposal = Proposal.objects.create(event=event, date=proposal_form.cleaned_data['date'],
+                                                       time=proposal_form.cleaned_data['time'],
+                                                       place=proposal_form.cleaned_data['place'],
+                                                       comment=proposal_form.cleaned_data['comment'],
+                                                       author=request.user)
+                user_did_proposal = True
+                # message success
+        else:
+            proposal_form = ProposalForm()
+    else:
+        proposal_form = None
+
+    status = 'Offen für Vorschläge' if event.status == Status.objects.get(status=STATUS_OPEN) else 'Termin festgelegt'
+
+    proposals = Proposal.objects.filter(event=event)
+
+    guests = event.guests.all()
+
+    context = {'proposal_form': proposal_form, 'determine_event_form': determine_event_form,
+               'is_organisator': is_organisator, 'user_did_proposal': user_did_proposal,
+               'event': event, 'guests': guests, 'status': status, 'proposals': proposals}
+    template = loader.get_template('events/event.html')
+    return HttpResponse(template.render(context, request))
+
+
+@login_required(login_url='/login/login')
+def overview(request):
+
+    # load events invited
+    events_invited = Event.objects.filter(guests=request.user)
+
+    # load events organised by user
+    events_organised = Event.objects.filter(organisator=request.user)
+
+    context = {'events_invited': events_invited, 'events_organised': events_organised}
+    template = loader.get_template('events/overview.html')
+    return HttpResponse(template.render(context, request))
+
+
+@login_required(login_url='/login/login')
 def new_event(request):
     # if not request.user.is_authenticated:
     #    return redirect('%s?next=%s' % ('/login/login', request.path))

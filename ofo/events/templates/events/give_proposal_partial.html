@@ -1,0 +1,40 @@
+<form method="post" action="">
+  {% csrf_token %}
+  <table>
+    
+    {% if form.errors %}
+      {% for field in form %}
+        {% for error in field.errors %}
+          <div class="">
+            {{ error|escape }}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <div>{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+      
+    <tr>
+      <td>{{ form.date.label_tag }}</td>
+      <td>{{ form.date }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.time.label_tag }}</td>
+      <td>{{ form.time }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.place.label_tag }}</td>
+      <td>{{ form.place }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.comment.label_tag }}</td>
+      <td>{{ form.comment }}</td>
+    <tr>
+      <td><input type="submit" value="Absenden"></td>
+    </tr>
+  </table>
+</form>
