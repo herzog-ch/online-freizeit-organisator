@@ -9,6 +9,7 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
             {% load static %}
             <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'header.css' %}">
         {% endblock head_css_site %}
         {% block head_css_page %}
         {% endblock head_css_page %}
@@ -16,10 +17,41 @@
 </head>
 <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid headerbar">
+        <div class="container d-flex align-items-center">
+        {% block logo %}
+            <div style="flex: 1;">
+                <img class="logo" src="{% static 'logo_183_55.svg' %}">
+            </div>
+        {% endblock logo %}
         {% block header %}
+            {% if request.user.is_authenticated %}
+                <div class="d-flex login-buttons logout-buttons">
+                    <div class="d-flex align-items-center mr-2"><span class="text-secondary">Eingeloggt:&nbsp;</span><span>{{ request.user.username }}</span></div>
+                    <a href="/logout" class="logout">Abmelden</a>
+                </div>
+            {% else %}
+               <div class="d-flex login-buttons">
+                    <a href="/login">Login</a>
+                    <a href="/signup">Registrieren</a>
+                </div>
+            {% endif %}
+
         {% endblock header %}
-    <div>
+        </div>
+    </div>
+    <div class="container-fluid menubar">
+        <div class="container d-flex flex-row align-items-center">
+        {% block menu %}
+            <a href="/events/new">
+                Neues Treffen
+            </a>
+            <a href="/events">
+                Übersicht
+            </a>
+        {% endblock menu %}
+        </div>
+    </div>
     
     <div class="container">
         {% block content %}

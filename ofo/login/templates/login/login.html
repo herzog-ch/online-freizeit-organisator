@@ -28,7 +28,7 @@ Login
       {% if form.errors %}
         {% for field in form %}
           {% for error in field.errors %}
-            <div class="">
+            <div class="text-danger">
               {{ error|escape }}
             </div>
           {% endfor %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block head_css_page %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'events/css/styles.css' %}">
+{% endblock head_css_page %}
+
+{% block title %}
+Übersicht  
+{% endblock title %}
+
+{% block content %}
+
+ 
+  <div>
+    <h3>Deine Einladungen</h3>
+      {% if not events_invited %}
+        Du bist aktuell zu keinem Treffen eingeladen.
+      {% else %}
+        <ul class="organised-events">
+          {% for event in events_invited %}
+            {% include "events/events_overview_invited_partial.html" %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+  </div>
+
+  <div>
+    <h3 class="pt-4">Deine organisierten Treffen</h3>
+
+    <ul class="organised-events">
+    {% if not events_organised %}
+      Du hast aktuell keine Treffen organisiert.<br>
+      <button type="submit" class="btn btn-primary mt-1">Neues Treffen organsieren</button>
+    {% else %}
+      {% for event in events_organised %}
+        {% include "events/events_overview_organised_partial.html" %}
+      {% endfor %}
+    {% endif %}
+
+    </ul>
+  </div>
+
+
+{% endblock content %}

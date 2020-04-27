@@ -1,0 +1,49 @@
+<div class="mt-4 mb-4">
+
+  <div class="col-12 col-md-6">
+    <div class="messages mb-2">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-errors">
+      {% if form.errors %}
+        {% for field in form %}
+          {% for error in field.errors %}
+            <div class="text-danger">
+              {{ error|escape }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.date.label_tag }}
+        {{ form.date }}
+      </div>
+      <div class="form-group">
+        {{ form.time.label_tag }}
+        {{ form.time }}
+      </div>
+      <div class="form-group">
+        {{ form.place.label_tag }}
+        {{ form.place }}
+      </div>
+      <div class="form-group">
+        {{ form.comment.label_tag }}
+        {{ form.comment }}
+      </div>
+      <button type="submit" class="btn btn-primary mt-1">Treffen festlegen</button>
+    </form>
+  </div>
+</div>

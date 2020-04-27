@@ -1,3 +1,4 @@
+from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template import loader
@@ -14,10 +15,14 @@ def signup_view(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(form.cleaned_data['username'], email=form.cleaned_data['email'],
-                                            password=form.cleaned_data['password1'])
-            messages.success(request, 'User %s was registered successfully' % form.cleaned_data['username'])
-            return redirect(login)
+            try:
+                user = User.objects.create_user(form.cleaned_data['username'], email=form.cleaned_data['email'],
+                                                password=form.cleaned_data['password1'])
+                messages.success(request, 'User %s wurde erfolgreich registriert.' % form.cleaned_data['username'],
+                                 extra_tags="text-success")
+                return redirect('login')
+            except forms.ValidationError:
+                pass
     else:
         form = RegistrationForm()
 

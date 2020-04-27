@@ -1,19 +1,19 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
-from django.contrib.auth.models import User
 from .forms import NewEventForm, ProposalForm, DetermineEventForm
 from .models import Event, STATUS_OPEN, STATUS_DECIDED, Status, Proposal
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 
-@login_required(login_url='/login/login')
+@login_required(login_url='/login')
 def detail(request, event_id):
     try:
         event = Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
-        return HttpResponseRedirect('/events/overview')
+        return redirect('overview')
 
     if event.organisator == request.user:
         is_organisator = True
@@ -30,6 +30,7 @@ def detail(request, event_id):
                 event.place = determine_event_form.cleaned_data['place']
                 event.save()
                 event.refresh_from_db()
+                determine_event_form = None
         else:
             determine_event_form = DetermineEventForm()
     else:
@@ -65,12 +66,13 @@ def detail(request, event_id):
 
     context = {'proposal_form': proposal_form, 'determine_event_form': determine_event_form,
                'is_organisator': is_organisator, 'user_did_proposal': user_did_proposal,
-               'event': event, 'guests': guests, 'status': status, 'proposals': proposals}
-    template = loader.get_template('events/event.html')
+               'event': event, 'guests': guests, 'status': status, 'proposals': proposals,
+               'is_open_for_proposals': event.status.status == STATUS_OPEN}
+    template = loader.get_template('events/events_detail.html')
     return HttpResponse(template.render(context, request))
 
 
-@login_required(login_url='/login/login')
+@login_required(login_url='/login')
 def overview(request):
 
     # load events invited
@@ -80,14 +82,12 @@ def overview(request):
     events_organised = Event.objects.filter(organisator=request.user)
 
     context = {'events_invited': events_invited, 'events_organised': events_organised}
-    template = loader.get_template('events/overview.html')
+    template = loader.get_template('events/events_overview.html')
     return HttpResponse(template.render(context, request))
 
 
-@login_required(login_url='/login/login')
+@login_required(login_url='/login')
 def new_event(request):
-    # if not request.user.is_authenticated:
-    #    return redirect('%s?next=%s' % ('/login/login', request.path))
 
     if request.method == 'POST':
         form = NewEventForm(request.POST)
@@ -100,7 +100,9 @@ def new_event(request):
             time = form.cleaned_data['time']
             status = Status.objects.get(status=STATUS_OPEN)
             organisator = User.objects.get(username=request.user.username)
-            event = Event.objects.create(title=title, organisator=organisator, status=status, date=date, time=time, duration=duration, place=place)
+            event = Event.objects.create(title=title, organisator=organisator, status=status, date=date, time=time,
+                                         duration=duration, place=place)
+            recipient_list = []
             for key, value in request.POST.items():
                 if key.startswith('guest-'):
                     new_user = value
@@ -108,16 +110,30 @@ def new_event(request):
                         new_user = User.objects.get(username=value)
                         event.guests.add(new_user)
                         event.save()
+                        recipient_list.append({'email': new_user.email, 'username': new_user.username})
                     except User.DoesNotExist:
                         continue
 
+            for recipient in recipient_list:
+                html_message = 'Hallo ' + recipient['username'] + ',\nDu wurdest zu einem neuen Treffen eingeladen!\n' \
+                                                   'Klicke <a href="#disc">Hier</a>'
+                send_mail(
+                subject='Neue Einladung - Online Freizeit Organisator',
+                html_message=html_message,
+                message=html_message,
+                from_email='online-freizeit-organisator@web.de',
+                # [recipient['email']],
+                recipient_list=['chr-herzog@web.de'],
+                fail_silently=False
+            )
+            # request.META['HTTP_HOST']
+            return redirect('overview')
     else:
         form = NewEventForm()
 
     context = {'form': form}
     template = loader.get_template('events/new_event.html')
     return HttpResponse(template.render(context, request))
-    # return render(request, 'events/new_event.html', context)
 
 
 def user_search(request):
@@ -132,3 +148,19 @@ def user_search(request):
             return JsonResponse(data=data_return)
     data_return = {'html': ''}
     return JsonResponse(data=data_return)
+
+
+@login_required(login_url='/login')
+def delete_event(request):
+    url_parameter = request.GET.get('k')
+    if url_parameter:
+        try:
+            event = Event.objects.get(pk=url_parameter)
+        except Event.DoesNotExist:
+            return redirect('overview')
+
+        if not request.user == event.organisator:
+            return redirect('overview')
+
+        event.delete()
+        return redirect('overview')

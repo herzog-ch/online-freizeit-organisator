@@ -1,0 +1,141 @@
+.user-search-list {
+  padding-left: 0px;
+  margin-top: 1em;
+}
+
+.user-search-list li {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 1em;
+  line-height: 2.5em;
+  margin-bottom: 0.25em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.user-search-list li span {
+  flex: 1;
+}
+
+.user-search-list li i {
+  color: #0275d8;
+  font-size: 1.5em;
+}
+
+
+@media (min-width: 577px) {
+  .user-search-list li:hover {
+    background-color: #0275d8;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .user-search-list li:hover span {
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .user-search-list li:hover i {
+    color: white;
+    transition: 0.3s;
+  } 
+}
+
+
+
+.added-users-ul {
+  padding-left: 0px;
+  margin-top: 1em;
+}
+
+.added-users-ul li {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 1em;
+  line-height: 2.5em;
+  margin-bottom: 0.25em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.added-users-ul li span {
+  flex: 1;
+}
+
+.added-users-ul li i {
+  color: #0275d8;
+  font-size: 1.5em;
+}
+
+@media (min-width: 577px) {
+  .added-users-ul li:hover {
+    background-color: #0275d8;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .added-users-ul li:hover span {
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .added-users-ul li:hover i {
+    color: white;
+    transition: 0.3s;
+  }
+}
+  
+
+
+
+ul.organised-events {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+
+a.delete-event {
+  line-height: 1.2em;
+  transition: 0.3s ease;
+}
+
+a.delete-event:hover {
+  color: gray;
+}
+
+ul.organised-events li i {
+  font-size: 1.2em;
+  margin-left: 1em;
+}
+
+ul.organised-events li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul.organised-events li a.detail-link {
+  font-size: 1.4em;
+  padding-top: 0.5em;
+}
+
+ul.organised-events li a:hover {
+  text-decoration: none;
+}
+
+.grey-light-small {
+  font-size: 0.9em;
+  color: gray;
+  font-weight: lighter;
+}
+
+.event-infos tr {
+  margin-bottom: 4em;
+}

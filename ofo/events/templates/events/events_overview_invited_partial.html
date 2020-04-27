@@ -1,0 +1,20 @@
+<li class="d-flex flex-row col-12">
+
+  <div class="d-flex flex-column flex-fill">
+    <a class="detail-link" href="/events/{{ event.pk }}">{{ event.title }}</a>
+    <div class="grey-light-small">
+      <span>{{ event.place }}</span>&nbsp;-&nbsp;
+      <span>{{ event.get_date_str }}</span>&nbsp;-&nbsp;
+      <span>{{ event.get_time_str }}</span>
+    </div>    
+  </div> 
+    
+  <div class="d-flex flex-row align-items-center">
+    {% if event.event_is_open %}
+      <span class="d-none d-sm-none d-lg-block grey-light-small">Offen für Vorschläge</span><i class="fas fa-lock-open" title="Offen für Vorschläge"></i>
+    {% else %}
+      <span class="d-none d-sm-none d-lg-block grey-light-small">Termin steht fest</span><i class="fas fa-lock" title="Termin festgelegt"></i>
+    {% endif %}
+  </div>
+
+</li>

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block head_css_page %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'events/css/styles.css' %}">
+{% endblock head_css_page %}
+
+{% block title %}
+  Treffen {{ event.title }}  
+{% endblock title %}
+
+{% block content %}
+
+  <h3 class="mb-4">Treffen: {{ event.title }}</h3>
+
+  <div>
+    <table class="event-infos">
+      <tr>
+        <td class="pt-1 pb-1">
+          {% if event.event_is_open %}
+            <i class="fas fa-lock-open" title="Offen für Vorschläge"></i>
+          {% else %}
+            <i class="fas fa-lock" title="Termin festgelegt"></i>
+          {% endif %}        
+        </td>
+        <td class="pt-1 pb-1 pl-2">Status:</td>
+        <td class="pt-1 pb-1 pl-2">{{ event.get_event_status_str }}</td>                
+      </tr>
+
+      <tr>
+        <td class="pt-1 pb-1">
+          <i class="fas fa-user-clock"></i>      
+        </td>
+        <td class="pt-1 pb-1 pl-2">Organisiert von:</td>
+        <td class="pt-1 pb-1 pl-2">{{ event.organisator.username }}</td>                
+      </tr>
+
+      <tr>
+        <td class="pt-1 pb-1">
+          <i class="fas fa-user-friends"></i>
+        </td>
+        <td class="pt-1 pb-1 pl-2">Eingeladen:</td>
+        <td class="pt-1 pb-1 pl-2">
+          {% for guest in guests %}
+            <i class="fas fa-user"></i> {{ guest.username }}<br>
+          {% endfor %}   
+        </td>                
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="mt-4">
+    <i class="fas fa-comments"></i><span class="pl-2">Vorschläge:</span>
+    <div class="mt-2">
+    {% if not proposals %}
+      Es gibt noch keine Vorschläge.
+    {% else %}
+      {% for proposal in proposals %}
+        {% include "events/events_detail_proposal_partial.html" %}
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+
+  {% if is_organisator and determine_event_form %}
+    <i class="fas fa-gavel"></i> Als Organisator kannst Du das Treffen endgültig festlegen:
+    {% with form=determine_event_form %}
+      {% include "events/events_detail_determine_partial.html" %}
+    {% endwith %}
+  {% endif %}
+
+  {% if not is_organisator and not user_did_proposal and proposal_form %}
+    {% with form=proposal_form %}
+      {% include "events/events_detail_give_proposal_partial.html" %}
+    {% endwith %}
+  {% endif %}
+
+
+{% endblock content %}

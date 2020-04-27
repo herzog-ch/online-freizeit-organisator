@@ -1,0 +1,104 @@
+.headerbar {
+  background-color: white;
+}
+
+.headerbar > .container {
+  height: 6em;
+}
+
+.logo {
+  height: 5em;
+  width: auto;
+}
+
+.menubar {
+  background-color: #39a910;
+}
+
+.menubar > .container {
+  height: 4em;
+  margin-bottom: 2em;
+}
+
+.login-buttons a:first-child {
+  margin-right: 0.25em;
+}
+
+.login-buttons a {
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  padding: 0.5em 0.6em;
+  transition: 0.3s ease;
+}
+
+
+.login-buttons a:hover {
+  text-decoration: none;
+  color: white;
+  border: 1px solid #39a910;
+  background-color: #39a910;
+}
+
+.menubar a {
+  padding: 0 1em;
+  color: white;
+  text-decoration: none;
+  line-height: 4em;
+  height: 100%;
+  transition: 0.5s ease;
+  font-weight: lighter;
+}
+
+.menubar a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  line-height: 4em;
+  height: 100%;
+}
+
+@media (max-width: 576px) {
+  .logo {
+    height: 3em;
+    width: auto;
+  }
+
+  .login-buttons {
+    flex-direction: column;
+  }
+
+  .login-buttons a:first-child {
+    margin-bottom: 0.1em;
+    margin-right: 0em;
+  }
+
+  .login-buttons a {
+    text-align: center;
+    padding: 0.2em 0.25em;
+  }
+
+  .logout-buttons {
+    font-size: 0.8em;
+    padding: 0.1em 0.2em;
+  }
+  .logout-buttons a {
+    width: 75%;
+    align-self: flex-end;
+    margin-top: 0.2em;
+  }
+
+
+}
+
+@media (min-width: 577px) and (max-width: 767px) {
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) {
+
+}

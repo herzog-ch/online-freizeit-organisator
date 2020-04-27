@@ -24,6 +24,24 @@ class Event(models.Model):
     place = models.CharField(max_length=100)
     guests = models.ManyToManyField(User, related_name='guests')
 
+    def get_event_status_str(self):
+        if self.status.status == STATUS_OPEN:
+            return 'Offen für Vorschläge'
+        else:
+            return 'Termin festgelegt'
+
+    def event_is_open(self):
+        if self.status.status == STATUS_OPEN:
+            return True
+        else:
+            return False
+
+    def get_date_str(self):
+        return str(self.date.day) + '.' + str(self.date.month) + '.' + str(self.date.year)
+
+    def get_time_str(self):
+        return str(self.time)
+
 
 class Proposal(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

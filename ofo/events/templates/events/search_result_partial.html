@@ -1,8 +1,8 @@
 {% if users %}
-  <ul>
+  <ul class="user-search-list">
     {% for user in users %}
       <li onclick="add_user('{{ user.username }}')">
-        {{ user.username }}
+        <span>{{ user.username }}</span>
         <i class="far fa-plus-square"></i>
       </li>
     {% endfor %}

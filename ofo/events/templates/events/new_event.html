@@ -1,80 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
+{% extends "base.html" %}
 
-  <form id="new_event_form" method="post" action="">
-    {% csrf_token %}
-    <table>
-      
+{% block head_css_page %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'events/css/styles.css' %}">
+{% endblock head_css_page %}
+
+{% block title %}
+Neues Treffen erstellen  
+{% endblock title %}
+
+{% block content %}
+
+  
+  <div class="d-flex flex-column align-items-center mt-4">
+    <h3 class="mb-4">Neues Treffen erstellen</h3>
+    <div class="col-12 col-md-6">
+      <div class="messages mb-2">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="form-errors">
       {% if form.errors %}
         {% for field in form %}
           {% for error in field.errors %}
-            <div class="">
+            <div class="text-danger">
               {{ error|escape }}
             </div>
           {% endfor %}
         {% endfor %}
       {% endif %}
+      </div>
+    </div>
 
-      {% if messages %}
-        {% for message in messages %}
-          <div>{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-
-      <tr>
-        <td>{{ form.title.label_tag }}</td>
-        <td>{{ form.title }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.place.label_tag }}</td>
-        <td>{{ form.place }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.date.label_tag }}</td>
-        <td>{{ form.date }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.time.label_tag }}</td>
-        <td>{{ form.time }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.duration.label_tag }}</td>
-        <td>{{ form.duration }}</td>
-      </tr>
-      <tr>
-        <td>Username:</td>
-        <td><input id="username-input" class="form-control form-control-sm" type="text" placeholder="Search" aria-label="Search"></td>
-      </tr>
-      <tr>
-        <td>
-          <div id="usernames-content">
+    <div class="col-12 col-md-6">
+      <form id="new_event_form" method="post" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.title.label_tag }}
+          {{ form.title }}
+        </div>
+        <div class="form-group">
+          {{ form.place.label_tag }}
+          {{ form.place }}
+        </div>
+        <div class="form-group">
+          {{ form.date.label_tag }}
+          {{ form.date }}
+        </div>
+        <div class="form-group">
+          {{ form.time.label_tag }}
+          {{ form.time }}
+        </div>
+        <div class="form-group">
+          {{ form.duration.label_tag }}
+          {{ form.duration }}
+        </div>
+        <div class="form-group">
+          <label for="username-input">User hinzufügen:</label>
+          <input id="username-input" class="form-control" type="text" placeholder="Suche" aria-label="Suche">
+          <div class="mt-1" id="usernames-content">
           </div>
-        </td>
-      </tr>
-      <tr>
-        <td><input type="submit" value="Event erstellen"></td>
-      </tr>
-    </table>
-  </form>
-
-  <div id="added-users-div">
-    <ul id="added-users-ul">
+        <button type="submit" class="btn btn-primary mt-4">Einladung senden</button>
+        <div></div>
+      </form>
+      <div id="added-users-div">
+        <p class="mt-4"><strong>Eingeladen:</strong></p>
+        <ul class="added-users-ul" id="added-users-ul">
       
-    </ul>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
-  <script src="https://kit.fontawesome.com/52b3c78dad.js" crossorigin="anonymous"></script>
+{% endblock content %}
+{% block footer_javascript_page %}
   {% load static %}
-  <script src="{% static "events/user_search.js" %}"></script>
-</body>
-</html>
+  <script src='{% static "events/js/user_search.js" %}'></script>
+{% endblock footer_javascript_page %}
