@@ -126,9 +126,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-print(STATICFILES_DIRS)
-
-
 EMAIL_HOST = 'smtp.web.de'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'online-freizeit-organisator@web.de'
