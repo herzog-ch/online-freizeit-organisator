@@ -1,5 +1,4 @@
 const username_input = $('#username-input');
-const search_icon = $('#search-icon')
 const found_users = $('#usernames-content');
 const new_event_form = $('#new_event_form');
 const ul_added_users = $('#added-users-ul');

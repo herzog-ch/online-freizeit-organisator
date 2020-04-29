@@ -54,7 +54,7 @@ Open Chrome Browser: http://localhost:8000
 
 + Static Files
 
-    No additional static files (css, js) is needed
+    No additional static file (css, js) is needed in the login app
 
 
 ### Events App
