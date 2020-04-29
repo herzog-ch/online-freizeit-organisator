@@ -9,6 +9,12 @@ from .forms import RegistrationForm, LoginForm
 
 
 def signup_view(request):
+    """View for the registration form
+
+    If the user is already logged in, the user will be redirected automatically to the index /
+
+    If the 
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
 
@@ -32,6 +38,12 @@ def signup_view(request):
 
 
 def login_view(request):
+    """View for the login form
+
+    If the user is already logged in, the user will be redirected automatically to the index /
+    If the username doesn't exist or the corresponding password is wrong an error message is shown.
+
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
 
@@ -55,5 +67,6 @@ def login_view(request):
 
 
 def logout_view(request):
+    """The user session is terminated and the user is redirected to the login page"""
     logout(request)
     return redirect('login')
