@@ -148,7 +148,7 @@ def new_event(request):
                 html_message = 'Hallo ' + recipient['username'] + '!<br><br>Du wurdest von ' + organisator.username + \
                                ' zu einem Treffen im ofo - Online-Freizeit-Organisator eingeladen!<br>' \
                                'Klicke <a href="' + event_href + '">hier</a>, um mehr zu dem Treffen zu erfahren!<br>' \
-                                                                 '<br><br>Falls der Link bei dir nicht funktioniert, ' \
+                                                                 '<br><br>Falls der Link bei Dir nicht funktioniert, ' \
                                                                  'gib einfach folgenden Link in den Browser ein:' \
                                                                  '<br><br>' + event_href + '<br><br>' \
                                'Viel Spaß!'
