@@ -111,6 +111,18 @@ a.delete-event:hover {
   color: gray;
 }
 
+ul.organised-events li {
+  background-color: rgb(247, 247, 247);
+  border-radius: 0.2em;
+  margin-bottom: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+ul.organised-events li:hover {
+  background-color: rgb(240, 240, 240);
+}
+
 ul.organised-events li i {
   font-size: 1.2em;
   margin-left: 1em;
@@ -123,7 +135,6 @@ ul.organised-events li a {
 
 ul.organised-events li a.detail-link {
   font-size: 1.4em;
-  padding-top: 0.5em;
 }
 
 ul.organised-events li a:hover {
@@ -136,6 +147,48 @@ ul.organised-events li a:hover {
   font-weight: lighter;
 }
 
+.event-infos {
+  background-color: rgb(247, 247, 247);
+  border-radius: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em 1em;
+  font-weight: lighter;
+}
+
 .event-infos tr {
   margin-bottom: 4em;
+}
+
+
+h3.table-header {
+  background-color: #39a910;
+  color: white;
+  font-weight: lighter;
+  padding: 0.5em 1em;
+  border-radius: 0.2em;
+}
+
+.proposals {
+  background-color: rgb(247, 247, 247);
+  border-radius: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 1em 1em;
+  font-weight: lighter;
+}
+
+.proposal {
+  background-color: rgb(230, 230, 230);
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+.proposal-details {
+  padding-left: 1em;
+}
+
+.determine-event {
+  font-weight: lighter;
+  background-color: rgb(247, 247, 247);
+  border-radius: 0.5em;
+  padding: 1em 1em;
 }

@@ -11,10 +11,10 @@
 
 {% block content %}
 
-  <h3 class="mb-4">Treffen: {{ event.title }}</h3>
+  <h3 class="mb-4 table-header">Treffen: <strong>{{ event.title }}</strong></h3>
 
-  <div>
-    <table class="event-infos">
+  <div class="event-infos">
+    <table>
       <tr>
         <td class="pt-1 pb-1">
           {% if event.event_is_open %}
@@ -37,20 +37,65 @@
 
       <tr>
         <td class="pt-1 pb-1">
+          <i class="fas fa-map-marker-alt"></i>      
+        </td>
+        <td class="pt-1 pb-1 pl-2">Ort:</td>
+        <td class="pt-1 pb-1 pl-2">{{ event.place }}</td>                
+      </tr>
+
+      <tr>
+        <td class="pt-1 pb-1">
+          <i class="fas fa-calendar-times"></i>    
+        </td>
+        <td class="pt-1 pb-1 pl-2">Datum:</td>
+        <td class="pt-1 pb-1 pl-2">{{ event.date }}</td>                
+      </tr>
+
+      <tr>
+        <td class="pt-1 pb-1">
+          <i class="fas fa-clock"></i>  
+        </td>
+        <td class="pt-1 pb-1 pl-2">Uhrzeit:</td>
+        <td class="pt-1 pb-1 pl-2">{{ event.time }}</td>                
+      </tr>     
+
+      <tr>
+        <td class="pt-1 pb-1">
+          <i class="fas fa-hourglass"></i>  
+        </td>
+        <td class="pt-1 pb-1 pl-2">Dauer (min):</td>
+        <td class="pt-1 pb-1 pl-2">{{ event.duration }}</td>                
+      </tr>  
+
+      <tr>
+        <td class="pt-1 pb-1" style="vertical-align: top;">
           <i class="fas fa-user-friends"></i>
         </td>
-        <td class="pt-1 pb-1 pl-2">Eingeladen:</td>
+        <td class="pt-1 pb-1 pl-2" style="vertical-align: top;">Eingeladen:</td>
         <td class="pt-1 pb-1 pl-2">
           {% for guest in guests %}
             <i class="fas fa-user"></i> {{ guest.username }}<br>
           {% endfor %}   
-        </td>                
+        </td>   
+
+      {% if not event.event_is_open %}
+        <tr>
+          <td class="pt-1 pb-1">
+            <i class="fas fa-clock"></i>  
+          </td>
+          <td class="pt-1 pb-1 pl-2">Kommentar:</td>
+          <td class="pt-1 pb-1 pl-2">{{ event.comment }}</td>                
+        </tr>  
+      {% else %}
+      {% endif %}
+       
+
       </tr>
     </table>
   </div>
 
 
-  <div class="mt-4">
+  <div class="mt-4 proposals">
     <i class="fas fa-comments"></i><span class="pl-2">Vorschläge:</span>
     <div class="mt-2">
     {% if not proposals %}
@@ -64,7 +109,7 @@
   </div>
 
   {% if is_organisator and determine_event_form %}
-    <i class="fas fa-gavel"></i> Als Organisator kannst Du das Treffen endgültig festlegen:
+    
     {% with form=determine_event_form %}
       {% include "events/events_detail_determine_partial.html" %}
     {% endwith %}

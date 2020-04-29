@@ -17,12 +17,12 @@ class Event(models.Model):
     title = models.CharField(max_length=100)
     organisator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='organisator')
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
-    # proposals = models.ManyToManyField(Proposal)
     date = models.DateField()
     time = models.TimeField()
     duration = models.IntegerField() # duration in minutes
     place = models.CharField(max_length=100)
     guests = models.ManyToManyField(User, related_name='guests')
+    comment = models.CharField(max_length=200)
 
     def get_event_status_str(self):
         if self.status.status == STATUS_OPEN:

@@ -1,9 +1,13 @@
-<div>
-<div><strong>{{ proposal.author.username }}</strong> schlägt vor:</div>
-
-  <div>Ort: {{ proposal.place }}</div>
-  <div>Datum: {{ proposal.date }}</div>
-  <div>Uhrzeit: {{ proposal.time }}</div>
-  <div>Kommentar: {{ proposal.comment }}</div>
+<div class="proposal mt-2">
+  <div>
+    <strong>{{ proposal.author.username }}</strong> schlägt vor:
+  </div>
+  
+  <div class="proposal-details">
+    <div>Ort: {{ proposal.place }}</div>
+    <div>Datum: {{ proposal.date }}</div>
+    <div>Uhrzeit: {{ proposal.time }}</div>
+    <div>Kommentar: {{ proposal.comment }}</div>
+  </div>
 
 </div>

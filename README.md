@@ -25,6 +25,7 @@ Open Chrome Browser: http://localhost:8000
 + Sending invitation email notifications
 + Live User Search for inviting people
 + Giving proposals and comments for meetings
++ Responsive Design
 
 
 ## 3rd Party Libs

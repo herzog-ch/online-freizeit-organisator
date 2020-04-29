@@ -2,14 +2,20 @@ from django.shortcuts import redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
-from .forms import NewEventForm, ProposalForm, DetermineEventForm
-from .models import Event, STATUS_OPEN, STATUS_DECIDED, Status, Proposal
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from .forms import NewEventForm, ProposalForm, DetermineEventForm
+from .models import Event, STATUS_OPEN, STATUS_DECIDED, Status, Proposal
 
 
 @login_required(login_url='/login')
 def detail(request, event_id):
+    """
+
+    :param request:
+    :param event_id:
+    :return:
+    """
     try:
         event = Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
@@ -28,6 +34,7 @@ def detail(request, event_id):
                 event.date = determine_event_form.cleaned_data['date']
                 event.time = determine_event_form.cleaned_data['time']
                 event.place = determine_event_form.cleaned_data['place']
+                event.comment = determine_event_form.cleaned_data['comment']
                 event.save()
                 event.refresh_from_db()
                 determine_event_form = None
@@ -132,7 +139,7 @@ def new_event(request):
         form = NewEventForm()
 
     context = {'form': form}
-    template = loader.get_template('events/new_event.html')
+    template = loader.get_template('events/events_new.html')
     return HttpResponse(template.render(context, request))
 
 

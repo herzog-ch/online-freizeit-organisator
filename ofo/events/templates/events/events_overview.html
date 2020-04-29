@@ -13,9 +13,9 @@
 
  
   <div>
-    <h3>Deine Einladungen</h3>
+    <h3 class="table-header mb-4">Deine Einladungen</h3>
       {% if not events_invited %}
-        Du bist aktuell zu keinem Treffen eingeladen.
+        <span class="font-weight-light">Du bist aktuell zu keinem Treffen eingeladen.</span>
       {% else %}
         <ul class="organised-events">
           {% for event in events_invited %}
@@ -26,13 +26,16 @@
 
   </div>
 
-  <div>
-    <h3 class="pt-4">Deine organisierten Treffen</h3>
+  <div class="pt-4 pb-4 mb-4">
+    <h3 class="table-header mb-4 mt-4">Deine organisierten Treffen</h3>
 
     <ul class="organised-events">
     {% if not events_organised %}
-      Du hast aktuell keine Treffen organisiert.<br>
-      <button type="submit" class="btn btn-primary mt-1">Neues Treffen organsieren</button>
+      <span class="font-weight-light">Du hast aktuell keine Treffen organisiert.</span><br>
+      <br>
+      <a class="mt-4" href="/events/new">
+        <button type="submit" class="btn btn-primary mt-1">Neues Treffen organsieren</button>
+      </a>
     {% else %}
       {% for event in events_organised %}
         {% include "events/events_overview_organised_partial.html" %}
