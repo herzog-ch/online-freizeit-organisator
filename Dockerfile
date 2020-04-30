@@ -4,5 +4,6 @@ ADD ofo/ /usr/src/app
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip3 install --no-cache-dir -r requirements.txt
+RUN python3 manage.py migrate
 EXPOSE 8000
 CMD exec python3 manage.py runserver 0.0.0.0:8000

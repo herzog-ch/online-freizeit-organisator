@@ -8,3 +8,4 @@ ofo/.idea/vcs.xml
 ofo/.idea/*
 venv/**/*
 color_palette.txt
+.DS_Store
