@@ -1,7 +1,9 @@
 # ofo. - Online Freizeit Organisator
 
 The Online-Freizeit-Organisator is implemented in Python3 using the Django framework.<br>
-The deployment can be done easily using Docker. The Django development server is used by purpose to keep the setup effort minimal. In production this method shouldn't be used.
+The deployment can be done easily using Docker. The Django development server is used by purpose to keep the setup effort minimal. In production this method shouldn't be used.<br>
+In order to run the application, you need to have Docker installed.
+The other required libs (Django) are automatically installed or loaded via a CDN (e.g. Bootstrap, jQuery, etc.).
 
 ## 5-Minute-Setup
 
@@ -31,6 +33,14 @@ docker ps -a
 docker start -ai <container name>
 # e.g. docker start -ai zealous_hugle
 ```
+
+<strong>Optional: </strong>If you want to access the application outside of localhost, you need to add your host IP to ofo/ofo/settings.py:
+1. Figure out your IP address with ifconfig, e.g. 192.168.178.74
+2. Put the IP in ofo/ofo/settings.py in line 28, like so:
+```
+ALLOWED_HOSTS = ['localhost', '192.168.178.74']
+```
+3. Build the Docker image again and run it
 
 
 ## Features
