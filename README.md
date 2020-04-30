@@ -5,7 +5,7 @@ The deployment can be done easily using Docker. The Django development server is
 In order to run the application, you need to have Docker installed.
 The other required libs (Django) are automatically installed or loaded via a CDN (e.g. Bootstrap, jQuery, etc.).
 
-<img src='./preview.gif' height=300 width=533>
+<img src='./preview.gif' height=360 width=640>
 
 ## 5-Minute-Setup
 
