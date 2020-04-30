@@ -157,8 +157,7 @@ def new_event(request):
                     html_message=html_message,
                     message=html_message,
                     from_email='online-freizeit-organisator@web.de',
-                    # [recipient['email']],
-                    recipient_list=['chr-herzog@web.de'],
+                    recipient_list=[recipient['email']],
                     fail_silently=False
                 )
             return redirect('overview')
